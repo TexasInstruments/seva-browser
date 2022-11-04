@@ -102,4 +102,4 @@ user_pref("webgl.vendor-string-override", " ");
 user_pref("browser.tabs.inTitlebar", 1);
 user_pref("browser.newtabpage.activity-stream.showSponsoredTopSites", false);
 user_pref("browser.fullscreen.autohide", false);
-user_pref("browser.uidensity", 2)
+user_pref("browser.uidensity", 2);
