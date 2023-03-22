@@ -1,6 +1,9 @@
-FROM alpine
+FROM debian
 
-RUN apk update && apk add --update firefox font-noto-all
+RUN apt-get update && apt-get install -y --no-install-recommends \
+	firefox-esr \
+	fonts-noto \
+	&& rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /root/.mozilla/firefox/default
 COPY ./prefs.js /root/.mozilla/firefox/default/prefs.js
