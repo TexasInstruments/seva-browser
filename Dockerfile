@@ -9,4 +9,12 @@ RUN mkdir -p /root/.mozilla/firefox/default
 COPY ./prefs.js /root/.mozilla/firefox/default/prefs.js
 COPY ./enterprise_policy/* /usr/lib/firefox/
 
-ENTRYPOINT ["firefox", "--no-remote", "--profile", "/root/.mozilla/firefox/default/", "--kiosk"]
+RUN useradd -m user
+RUN mkdir -p /home/user/.mozilla/firefox/default
+COPY ./prefs.js /home/user/.mozilla/firefox/default/prefs.js
+RUN chown user:user -R /home/user
+
+copy entrypoint.sh /
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
