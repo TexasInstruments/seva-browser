@@ -1,6 +1,6 @@
 # seva-browser
 
-Firefox container for use with X11 / Wayland passthrough. Primarily designed
+Firefox container built on debian:stable-slim for use with X11 / Wayland passthrough. Primarily designed
 for use with Seva services but there's nothing stopping you from using it
 elsewhere.
 
