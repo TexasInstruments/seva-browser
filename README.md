@@ -1,8 +1,7 @@
 # seva-browser
 
-Firefox's docker image built on debian:stable-slim for use with X11 / Wayland passthrough. Primarily designed
-for use with Seva services but there's nothing stopping you from using it
-elsewhere.
+Firefox's Docker image which is built on debian:stable-slim for use with X11 / Wayland passthrough. Primarily designed
+for use with Seva services but there's nothing stopping you from using it elsewhere.
 
 ## Usage
 
