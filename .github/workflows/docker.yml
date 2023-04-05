@@ -9,6 +9,8 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  MAJOR_VERSION: 0
+  MINOR_VERSION: 1
 
 jobs:
   build:
@@ -52,8 +54,25 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          
+
       - name: Save Docker image as tarball
-        uses: docker/cli@v20.10.8
+        run: mkdir seva && docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main && docker save -o seva/seva-browser.tar ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main
+
+      - name: Create Github Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.SEVA }}
         with:
-         args: save ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tags }} -o ${{ github.repository_owner }}.tar 
+          tag_name: v${{ env.MAJOR_VERSION }}.${{ env.MINOR_VERSION }}.${{ github.run_number }}
+          release_name: Release v${{ env.MAJOR_VERSION }}.${{ env.MINOR_VERSION }}.${{ github.run_number }}
+
+      - name: Upload Release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.SEVA }}
+        with:
+            upload_url: ${{ steps.create_release.outputs.upload_url }}
+            asset_path: seva/seva-browser.tar
+            asset_name: seva-browser-v${{ env.MAJOR_VERSION }}.${{ env.MINOR_VERSION }}.${{ github.run_number }}.tar
+            asset_content_type: application/tar
