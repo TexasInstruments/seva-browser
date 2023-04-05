@@ -52,8 +52,12 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          
-      - name: Save Docker image as tarball
-        uses: docker/cli@v20.10.8
+
+      - name: Save Docker Image as tarball
+        run: mkdir seva && docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main && docker save -o seva/seva-browser.tar ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main
+
+      - name: Upload Release
+        uses: ncipollo/release-action@v1
         with:
-         args: save ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tags }} -o ${{ github.repository_owner }}.tar 
+          artifacts: "seva/seva-browser.tar"
+          token: ${{ secrets.SEVA }}
