@@ -54,6 +54,6 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           
       - name: Save Docker image as tarball
-        uses: docker/cli@v20.10.23
+        uses: docker/cli@v20.10.8
         with:
          args: save ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tags }} -o ${{ github.repository_owner }}.tar 
