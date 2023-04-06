@@ -45,6 +45,7 @@ jobs:
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
+        id: build
         with:
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           context: .
@@ -53,7 +54,10 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Save Docker Image as Tar
-        run: mkdir seva && docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tags }} && docker save ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tags }} | gzip > seva/seva-browser.tar.gz
+        run: |
+              # Strip git ref prefix from version
+              VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+              mkdir seva && docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$VERSION && docker save ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$VERSION | gzip > seva/seva-browser.tar.gz
 
       - name: Upload Release
         uses: ncipollo/release-action@v1
