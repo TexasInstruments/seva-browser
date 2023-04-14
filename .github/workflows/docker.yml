@@ -47,7 +47,7 @@ jobs:
         uses: docker/build-push-action@v3
         id: build
         with:
-          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          platforms: linux/arm64
           context: .
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
@@ -64,3 +64,4 @@ jobs:
         with:
           artifacts: "seva/seva-browser.tar.gz"
           token: ${{ secrets.SEVA }}
+          allowUpdates: true
