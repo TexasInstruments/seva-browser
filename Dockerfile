@@ -1,7 +1,7 @@
 FROM debian:stable-slim
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-	firefox-esr:102.9.0 \
+	firefox-esr \
 	fonts-noto \
 	&& rm -rf /var/lib/apt/lists/*
 
