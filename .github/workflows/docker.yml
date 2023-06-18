@@ -57,7 +57,8 @@ jobs:
         run: |
               # Strip git ref prefix from version
               VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-              mkdir seva && docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$VERSION && docker save ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$VERSION | gzip > seva/seva-browser.tar.gz
+              IMAGE_NAME=$(echo ${{ env.IMAGE_NAME }} | tr '[A-Z]' '[a-z]')
+              mkdir seva && docker pull ${{ env.REGISTRY }}/$IMAGE_NAME:$VERSION && docker save ${{ env.REGISTRY }}/$IMAGE_NAME:$VERSION | gzip > seva/seva-browser.tar.gz
 
       - name: Upload Release
         uses: ncipollo/release-action@v1

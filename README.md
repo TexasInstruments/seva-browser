@@ -20,6 +20,6 @@ docker run \
 	-e no_proxy \
 	-v $XDG_RUNTIME_DIR:/tmp \
 	--user=0:0 \
-	ghcr.io/cshilwant/seva-browser:latest \
+	ghcr.io/texasinstruments/seva-browser:latest \
 	https://example.com/
 ```
